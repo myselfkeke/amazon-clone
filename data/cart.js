@@ -1,3 +1,1 @@
-const cart = [];
-
-// document.querySelector(".js-cart-quantity").innerText = cart.length;
+export const cart = [];

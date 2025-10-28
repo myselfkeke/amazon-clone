@@ -1,3 +1,5 @@
+import { cart } from "../data/cart.js";
+import { products } from "../data/products.js";
 let productsHtml = "";
 products.forEach((product) => {
   productsHtml += `
@@ -73,10 +75,12 @@ addToCartButtonArr.forEach((button) => {
           quantity: 1,
         });
     console.log(cart);
+
     let cartQuantity = 0;
     cart.forEach((cartItem) => {
       cartQuantity += cartItem.quantity;
     });
+
     document.querySelector(".js-cart-quantity").innerText = cartQuantity;
   });
 });
