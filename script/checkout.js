@@ -1,13 +1,15 @@
 import { cart, removeFromCart } from "../data/cart.js";
+console.log(cart);
+
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
 // code to make chekout.html interactive
-let cartSummaryHtml;
+let cartSummaryHtml = "";
 cart.forEach((cartItem) => {
-  let productId = cartItem.id;
+  let productId = cartItem.productId;
 
-  let matchingProduct = " ";
+  let matchingProduct;
   products.forEach((product) => {
     if (productId === product.id) {
       matchingProduct = product;
@@ -96,7 +98,7 @@ orderSummaryDiv.innerHTML = cartSummaryHtml;
 // to make the delete button interactive here are the steps
 // 1. acces the html element and add eventListener
 // 2. update the cart order
-// 2. update the cart order summary, by removing the html.
+// 3. update the cart order summary, by removing the html.
 
 const deleteLinkArr = document.querySelectorAll(".js-delete-quantity-link");
 

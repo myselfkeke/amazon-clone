@@ -1,13 +1,21 @@
-export let cart = [
-  {
-    id: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
-    quantity: 5,
-  },
-  {
-    id: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
-    quantity: 2,
-  },
-];
+export let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// if (!cart) {
+//    {
+//     productId: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
+//     quantity: 5,
+//   },
+//   {
+//     productId: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
+//     quantity: 2,
+//   },
+// }
+
+// function to save the cart to local storage so that it doesn't get reset when the page is refreashed as they are stored in valiable till now and variable vaporates when page is refreashed.
+
+export function saveToStorage() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
 
 // function to Add Item to Cart;
 export function addItemToCart(productId) {
@@ -23,6 +31,8 @@ export function addItemToCart(productId) {
         quantity: 1,
       });
   console.log(cart);
+
+  saveToStorage();
 }
 
 // note - what is normalizing the data or deduplicationg the data
@@ -32,11 +42,12 @@ export function removeFromCart(productId) {
   let newCart = [];
 
   cart.forEach((cartItem) => {
-    if (cartItem.id !== productId) {
-      // later it is necessary to chante cartItem.id to cartItem.productId because this is how the item is being dynemiccaly added to the cart
+    if (cartItem.productId !== productId) {
       newCart.push(cartItem);
     }
   });
 
   cart = newCart;
+
+  saveToStorage();
 }
