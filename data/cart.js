@@ -1,4 +1,4 @@
-export const cart = [
+export let cart = [
   {
     id: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
     quantity: 5,
@@ -26,3 +26,17 @@ export function addItemToCart(productId) {
 }
 
 // note - what is normalizing the data or deduplicationg the data
+
+// function to remove the cart item when delete link is clicked.
+export function removeFromCart(productId) {
+  let newCart = [];
+
+  cart.forEach((cartItem) => {
+    if (cartItem.id !== productId) {
+      // later it is necessary to chante cartItem.id to cartItem.productId because this is how the item is being dynemiccaly added to the cart
+      newCart.push(cartItem);
+    }
+  });
+
+  cart = newCart;
+}

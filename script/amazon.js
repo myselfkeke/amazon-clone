@@ -77,29 +77,3 @@ addToCartButtonArr.forEach((button) => {
     updateCartQuanty();
   });
 });
-
-// the below commented logic is given by chatgpt
-
-// AddToCartButtonArr.forEach((addToCartButton) => {
-//   addToCartButton.addEventListener("click", () => {
-//     const productName = addToCartButton.dataset.productName;
-
-//     // Find if item already exists
-//     const existingItem = cart.find(
-//       (cartItem) => cartItem.productName === productName
-//     );
-
-//     if (existingItem) {
-//       // if present, increase quantity
-//       existingItem.quantity++;
-//     } else {
-//       // if not present, add new one
-//       cart.push({
-//         productName,
-//         quantity: 1,
-//       });
-//     }
-
-//     console.log(cart);
-//   });
-// });
