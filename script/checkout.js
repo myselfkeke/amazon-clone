@@ -5,6 +5,7 @@ import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
+import { updateDeliveryOption } from "../data/cart.js";
 
 // code to make chekout.html interactive
 let cartSummaryHtml = "";
@@ -96,7 +97,10 @@ function deliveryOptionsHTML(matchingProduct, cartItem) {
 
     const isChecked = deliveryOption.id === cartItem.deliveryOptionsId;
 
-    html += ` <div class="delivery-option">
+    html += ` <div class="delivery-option js-delivery-option"
+            data-product-id="${matchingProduct.id}"
+            data-delivery-option-id="${deliveryOption.id}"
+            >
       <input
         type="radio"
         ${isChecked ? "checked" : " "}
@@ -137,5 +141,15 @@ deleteLinkArr.forEach((deleteLink) => {
       `.js-cart-item-container-${productId}`
     );
     container.remove();
+  });
+});
+
+const deliveryOptionArr = document.querySelectorAll(".js-delivery-option");
+
+deliveryOptionArr.forEach((element) => {
+  element.addEventListener("click", () => {
+    const { productId, deliveryOptionId } = element.dataset;
+
+    updateDeliveryOption(productId, deliveryOptionId);
   });
 });
