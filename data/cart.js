@@ -35,8 +35,6 @@ export function addItemToCart(productId) {
         quantity: 1,
         deliveryOptionsId: "1",
       });
-  console.log(cart);
-
   saveToStorage();
 }
 
@@ -67,6 +65,5 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
   });
 
   existingItem.deliveryOptionsId = deliveryOptionId;
-  console.log(existingItem);
   saveToStorage();
 }
