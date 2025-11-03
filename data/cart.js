@@ -4,7 +4,7 @@ if (!cart) {
   cart = [
     {
       productId: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
-      quantity: 5,
+      quantity: 1,
       deliveryOptionsId: "1",
     },
     {
