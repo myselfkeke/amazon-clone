@@ -1,21 +1,28 @@
-export let cart = JSON.parse(localStorage.getItem("cart"));
+export let cart;
 
-if (!cart) {
-  cart = [
-    {
-      productId: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
-      quantity: 1,
-      deliveryOptionsId: "1",
-    },
-    {
-      productId: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
-      quantity: 2,
-      deliveryOptionsId: "2",
-    },
-  ];
+loadFromStorage();
+
+// function to load from storage so that we can load when we want to avoid testing conflict in jasmine.
+export function loadFromStorage() {
+  cart = JSON.parse(localStorage.getItem("cart"));
+
+  if (!cart) {
+    cart = [
+      {
+        productId: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
+        quantity: 1,
+        deliveryOptionsId: "1",
+      },
+      {
+        productId: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
+        quantity: 2,
+        deliveryOptionsId: "2",
+      },
+    ];
+  }
 }
 
-// function to save the cart to local storage so that it doesn't get reset when the page is refreashed as they are stored in valiable till now and variable vaporates when page is refreashed.
+// function to save the cart to local storage so that it doesn't get reset when the page is refreashed as they are stored in variable till now and variable vaporates when page is refreashed.
 
 export function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
