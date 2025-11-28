@@ -1,69 +1,82 @@
-export let cart = JSON.parse(localStorage.getItem("cart"));
+function Cart(localStorageKey) {
+  const cart = {
+    cartItems: undefined,
 
-if (!cart) {
-  cart = [
-    {
-      productId: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
-      quantity: 1,
-      deliveryOptionsId: "1",
+    loadFromStorage() {
+      this.cartItems = JSON.parse(localStorage.getItem(localStorageKey));
+
+      if (!this.cartItems) {
+        this.cartItems = [
+          {
+            productId: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
+            quantity: 1,
+            deliveryOptionsId: "1",
+          },
+          {
+            productId: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
+            quantity: 2,
+            deliveryOptionsId: "2",
+          },
+        ];
+      }
     },
-    {
-      productId: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
-      quantity: 2,
-      deliveryOptionsId: "2",
+
+    saveToStorage() {
+      localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
     },
-  ];
-}
 
-// function to save the cart to local storage so that it doesn't get reset when the page is refreashed as they are stored in valiable till now and variable vaporates when page is refreashed.
+    addItemToCart(productId) {
+      let existingItem;
 
-export function saveToStorage() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-// function to Add Item to Cart;
-export function addItemToCart(productId) {
-  let existingItem;
-
-  cart.forEach((cartItem) => {
-    if (productId === cartItem.productId) existingItem = cartItem;
-  });
-  existingItem
-    ? existingItem.quantity++
-    : cart.push({
-        productId,
-        quantity: 1,
-        deliveryOptionsId: "1",
+      this.cartItems.forEach((cartItem) => {
+        if (productId === cartItem.productId) existingItem = cartItem;
       });
-  saveToStorage();
+      existingItem
+        ? existingItem.quantity++
+        : this.cartItems.push({
+            productId,
+            quantity: 1,
+            deliveryOptionsId: "1",
+          });
+      this.saveToStorage();
+    },
+
+    removeFromCart(productId) {
+      let newCart = [];
+
+      this.cartItems.forEach((cartItem) => {
+        if (this.cartItems.productId !== productId) {
+          newCart.push(cartItem);
+        }
+      });
+
+      this.cartItems = newCart;
+
+      this.saveToStorage();
+    },
+    updateDeliveryOption(productId, deliveryOptionId) {
+      let existingItem;
+
+      this.cartItems.forEach((cartItem) => {
+        if (productId === cartItem.productId) {
+          existingItem = cartItem;
+        }
+      });
+
+      existingItem.deliveryOptionsId = deliveryOptionId;
+      this.saveToStorage();
+    },
+  };
+
+  return cart;
 }
 
-// note - what is normalizing the data or deduplicationg the data
+const cart = Cart("cart-oop");
+const businessCart = Cart("cart-business");
 
-// function to remove the cart item when delete link is clicked.
-export function removeFromCart(productId) {
-  let newCart = [];
+cart.loadFromStorage();
 
-  cart.forEach((cartItem) => {
-    if (cartItem.productId !== productId) {
-      newCart.push(cartItem);
-    }
-  });
+businessCart.loadFromStorage();
 
-  cart = newCart;
-
-  saveToStorage();
-}
-
-export function updateDeliveryOption(productId, deliveryOptionId) {
-  let existingItem;
-
-  cart.forEach((cartItem) => {
-    if (productId === cartItem.productId) {
-      existingItem = cartItem;
-    }
-  });
-
-  existingItem.deliveryOptionsId = deliveryOptionId;
-  saveToStorage();
-}
+console.log(cart);
+console.log(businessCart);
